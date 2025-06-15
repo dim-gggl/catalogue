@@ -1,0 +1,76 @@
+:root {
+    --bg-color: #FFFFFF;
+    --fg-color: #000000;
+    --logo-font: "Genos", sans-serif;
+    --reg-font: "Phetsarath", serif;
+    --txt-shadow: 1px -1px 1px #000000, -1px 1px 1px #FFFFFF;
+    --pop-color: #d82768;
+    --border: 1px solid #000000;
+    --rem: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--rem);
+    font-family: var(--reg-font);
+}
+
+body {
+    font-family: var(--reg-font);
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+}
+
+.logo {
+    font-family: var(--logo-font);
+    color: var(--bg-color);
+    text-decoration: none;
+    font-size: 3rem;
+}
+
+header,
+footer {
+    background-color: var(--fg-color);
+    color: var(--bg-color);
+    padding: 1rem;
+    text-align: center;
+    width: 100vw;
+}
+
+a {
+    margin: 0 1rem;
+    color: var(--fg-color);
+    text-decoration: none;
+}
+
+.navbar {
+    max-width: 26vw;
+    position: relative;
+    margin-left: auto;
+}
+
+.navbar>a {
+    color: var(--bg-color);
+    text-transform: uppercase;
+    background-color: #FFFFFF45;
+    padding: 0.8ch 2ch;
+    border-radius: 20px;
+}
+
+main {
+    max-width: 80vw;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+}

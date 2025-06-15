@@ -1,0 +1,10 @@
+{% extends "catalogue/base.html" %}
+{% block content %}
+  <section class="signup-invitation-container">
+    {% block sign_up_invitation %}{% endblock%}
+  </section>
+  <fieldset class="form-container">
+    <legend class="form-title">{% block form_title %}{% endblock %}
+  </fieldset>
+  {% block form %}{% endblock %}
+{% endblock %}

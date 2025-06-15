@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Catalogue{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Genos:ital,wght@1,491&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Phetsarath&display=swap');
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static "catalogue/style.css" %}">
+    </head>
+  <body>
+    <header class="banner">
+      <h1 class="banner-title"><a href="/" class="banner-title logo">catalogue</a></h1>
+      <nav class="navbar">
+        {% if user.is_authenticated %}
+          Bonjour {{ user.username }} · <a href="{% url 'logout' %}" class="navbar-connect-link">Se déconnecter</a>
+        {% else %}
+          <a href="{% url 'login' %}">Connexion</a> · <a href="{% url 'signup' %}" class="navbar-signup-link">Inscription</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      {% block footer %}
+      {% endblock %}
+    </footer>
+  <script>
+    {% block script %}
+    {% endblock %}
+  </script>
+  </body>
+</html>
