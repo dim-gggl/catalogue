@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 from ..managers import UserManager
+from .wishlist import Wishlist
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
@@ -12,10 +13,6 @@ class User(AbstractUser):
         null=True,
         blank=True
     )
-    wishlist = models.JSONField(
-        default=list, blank=True, null=True,
-        help_text=_("List of artwork references in the wishlist")
-    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -23,7 +20,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __repr__(self):
-        return _(f"<User: id={self.pk}>")
+        return f"<User: id={self.pk}>"
 
     def __str__(self):
-        return _(f"User: {self.username}")
+        return f"User: {self.username}"

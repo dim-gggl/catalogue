@@ -7,17 +7,12 @@ from .artwork import Artwork
 class Wishlist(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="wishlist"
+        on_delete=models.CASCADE
     )
     added_at = models.DateTimeField(auto_now_add=True)
     artworks = models.ManyToManyField(
-        Artwork,
-        related_name=_("wishlist")
+        Artwork
     )
-
-    class Meta:
-        unique_together = ("user", "artworks")
 
     def add_artwork(self, artwork):
         self.artworks.add(artwork)

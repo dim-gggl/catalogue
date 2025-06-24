@@ -1,9 +1,9 @@
 from pathlib import Path
-
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-ftl=0c6-6m6LLLKù‰\Z3€ow0d87=&vi7grk0z-hi1e0snk2ltud6'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = True
 
@@ -111,3 +111,5 @@ LOGOUT_REDIRECT_URL = LOGIN_URL
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.joinpath('media/')
+
+SETTINGS_MODULE = "art_archive"

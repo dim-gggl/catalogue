@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from django.utils.translation import gettext_lazy as _
-from django.conf.settings import AUTH_USER_MODEL
+from django.conf import settings
 from django.urls import reverse_lazy
 
 from ..models.user import User
@@ -9,7 +9,7 @@ from ..forms import UserForm
 
 
 class UserListView(LoginRequiredMixin, ListView):
-    model = AUTH_USER_MODEL
+    model = settings.AUTH_USER_MODEL
     template_name = 'catalogue/user_list.html'
     context_object_name = 'users'
     login_url = 'login'
@@ -17,7 +17,7 @@ class UserListView(LoginRequiredMixin, ListView):
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
-    model = AUTH_USER_MODEL
+    model = settings.AUTH_USER_MODEL
     template_name = 'catalogue/user_detail.html'
     context_object_name = 'user'
     login_url = 'login'
@@ -25,7 +25,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = AUTH_USER_MODEL
+    model = settings.AUTH_USER_MODEL
     template_name = 'catalogue/user_form.html'
     fields = ['username', 'email', 'bio', 'avatar']
     login_url = 'login'
@@ -36,7 +36,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class UserCreateView(CreateView):
-    model = AUTH_USER_MODEL
+    model = settings.AUTH_USER_MODEL
     template_name = "catalogue/user_form.html"
     fields = ["username", "password", "avatar"]
     form_class = UserForm
