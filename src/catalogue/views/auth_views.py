@@ -1,6 +1,6 @@
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.views.generic import ListView
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -13,10 +13,9 @@ from ..forms import UserCreationForm as SignUpForm
 class ArtLoginView(LoginView):
     template_name = "catalogue/login.html"
 
-class ArtLogoutView(LogoutView):
-    template_name = "catalogue/logout.html"
-
-    def get(self):
+class ArtLogoutView(View):
+    def get(self, request):
+        logout(request)
         return redirect("login")
 
 

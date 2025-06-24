@@ -1,8 +1,8 @@
 <form method="POST" aria-describedby="form-message">
+    <!-- CSRF token for security -->
+    {% csrf_token %}    
     <!-- Render the Django form fields as <p> elements -->
     {{ form.as_p }}
-    <!-- CSRF token for security -->
-    {% csrf_token %}
     <!-- Submit button, customizable text via 'button_text' context variable -->
     <button type="submit" class="login-submit-btn" alt="bouton de validation de formulaire" tabindex=0>
         {{ button_text|default:"Soumettre" }}
