@@ -1,5 +1,7 @@
 from django.db import models
 
+from ..const import CONTEXTUAL_SUPPORTS as CHOICES
+
 
 class ContextualReference(models.Model):
     name = models.CharField(max_length=255)
@@ -7,11 +9,7 @@ class ContextualReference(models.Model):
     reference_type = models.CharField(
         max_length=100,
         choices=[
-            ("EXHIBITION_CATALOGUE", "Catalogue d'exposition"),
-            ("ALBUM", "Album BD"),
-            ("BOOK", "Ouvrage critique"),
-            ("MAGAZINE", "Magazine"),
-            ("OTHER", "Autre")
+            (choice, choice.lower().replace("_", " ").title()) for choice in CHOICES
         ],
         default="OTHER"
     )

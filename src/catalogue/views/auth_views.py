@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login
 from django.views.generic import ListView
 from django.shortcuts import render, redirect
-from django.conf import settings
+from django.conf.settings import LOGIN_REDIRECT_URL
 from django.views import View
 from .. import models
 
@@ -38,7 +38,7 @@ class SignUpView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(settings.LOGIN_REDIRECT_URL)
+            return redirect(LOGIN_REDIRECT_URL)
 
         return render(
             request=request,

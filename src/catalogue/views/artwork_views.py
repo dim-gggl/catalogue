@@ -3,7 +3,10 @@ from ..models.artwork import Artwork
 
 
 class ArtworkDetailView(DetailView):
-    model = Artwork
+
+    class Meta:
+        model = Artwork
+        fields = "__all__"
 
     def get_queryset(self, request, *args, **kwargs):
         queryset = self.model.objects.all()

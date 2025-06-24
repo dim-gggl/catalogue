@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from .art import Art
@@ -163,24 +162,18 @@ class Artwork(models.Model):
         on_delete=models.SET_NULL, related_name="artworks"
     )
     is_signated = models.BooleanField(
-        name="Signé", default=False,
-        choices=[("True", "Oui"), ("False", "Non")]
+        name="is_signed", default=False,
+        choices=[("True", "Yes"), ("False", "No")]
     )
     contextual_references = models.ManyToManyField(
         ContextualReference, blank=True, related_name="artworks"
     )
-    owner = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name=_("artworks")
-    )
 
-    @property
-    def is_in_wishlist(self):
-        user = self.request.user
+    def is_in_wishlist(self, user):
         return self in user.wishlist
 
     def __str__(self):
-        return self.title or f"Œuvre sans titre #{self.id}"
+        return self.title or f"{'Untitled'} #{self.id}"
 
     class Meta:
         ordering = ["-acquisition_date", "title"]

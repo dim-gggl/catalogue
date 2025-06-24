@@ -11,5 +11,5 @@ class Artist(models.Model):
 
     def __str__(self):
         return (
-            f"{self.first_name} {self.last_name}".strip() or "Artiste inconnu"
+            f"{self.first_name} {self.last_name}".strip() or _("Unknown artist")
         )
