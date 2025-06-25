@@ -9,12 +9,18 @@ class Artist(models.Model):
     death_year = models.IntegerField(null=True, blank=True)
     nationality = models.CharField(max_length=100, blank=True)
     biography = models.TextField(blank=True)
+    
+    # @property
+    # def pseudonym(self):
+        
 
-    @property
-    def pseudonym(self):
-        return self.pseudonym
-
-    @pseudonym.setter
+    # @pseudonym.setter
+    # def pseudonym(self, value):
+    #     if value:
+    #         self.pseudonym = value
+    #     else:
+    #         self.pseudonym = f"{self.first_name} {self.last_name}"
+    
     def display_name(self):
         """Return a user friendly name for the artist."""
         if self.pseudonym:

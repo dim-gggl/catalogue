@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 
 from .views.auth_views import ArtLoginView, ArtLogoutView, SignUpView, HomeListView
-from .views.artwork_views import StockListView, ArtworkCreateView
+from .views.artwork_views import StockListView, ArtworkCreateView, ArtworkDetailView
 from .views.dashboard_views import DashboardView
 
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="signup"),
     path("stock/", StockListView.as_view(), name="stock"),
     path("artworks/add/", ArtworkCreateView.as_view(), name="artwork_add"),
+    path("artworks/<int:pk>/", ArtworkDetailView.as_view(), name="artwork_detail"),
 ]
 
 

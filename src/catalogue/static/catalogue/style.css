@@ -1,5 +1,5 @@
 :root {
-    --bg-color: #fff8f6;
+    --bg-color: #f6f6f6e7;
     --fg-color: #151515;
     --logo-font: "Genos", sans-serif;
     --reg-font: "Phetsarath", serif;
@@ -17,6 +17,7 @@
 html {
     font-size: var(--rem);
     font-family: var(--reg-font);
+    background: #00000050;
 }
 
 body {
@@ -48,6 +49,17 @@ a {
     text-decoration: none;
 }
 
+button {
+    background-color: var(--fg-color);
+    color: var(--bg-color);
+    margin: 2vh auto;
+    max-width: 50%;
+}
+
+select {
+    padding-left: 1vw;
+}
+
 .navbar {
     max-width: 26vw;
     position: relative;
@@ -57,11 +69,11 @@ a {
 .navbar > a {
 	color: var(--bg-color);
 	text-transform: uppercase;
-	background-color: #FFFFFF15;
+	/* background-color: #FFFFFF15; */
 	padding: 0.6ch 2ch;
-	border-radius: 10px;
-	border: 1px solid #FFFFFF45;
-	color: #a4a4a4;
+	/* border-radius: 10px;
+	border: 1px solid #FFFFFF45; */
+	/* color: #a4a4a4; */
 	text-shadow: 1px -1px 1px #ffffff50, -1px 1px 1px #00000050;
 	font-family: "Bebas Neue", sans-serif;
 	letter-spacing: 1px;
@@ -69,12 +81,16 @@ a {
 
 main {
     max-width: 80vw;
-    height: 100vh;
+    min-height: 100vh;
     margin: 2rem auto;
-    background: white;
+    /* background: white; */
+    background: transparent;
+    /* background: linear-gradient(176deg, #ffffffff, rgba(109, 109, 109, 0.45) 47.9%, rgba(129, 129, 129, 0.29) 78.57%, #1414147a); */
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0px 0px 1px #1b121250);
+    /* border-radius: 15% 15% 17% 17%; */
+    /* box-shadow: 0 0 8px rgba(0px 0px 1px #1b121250);
+    box-shadow: inset -9px 12px 13px 6px #00000050; */
 }
 
 .login-page {
@@ -142,4 +158,41 @@ form p > input {
     min-width: 30vw;
     display: flex;
     /* flex-direction: column; */
+}
+
+.artwork-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  .artwork-container > h1 {
+    text-align: center;
+  }
+  
+  .artwork-container p {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    margin: 2vh auto;
+  }
+  
+  .artwork-container p input, .artwork-container p select {
+    border: 1px solid #00000040;
+    min-height: 3vh;
+    background: var(--bg-color);
+    background-color: var(--bg-color);
+}
+
+button.login-submit-btn {
+    min-width: 100%;
+    padding-block: 1vh;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-family: Noto Sans, sans-serif;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+}
+button.login-submit-btn:hover {
+    transform: translate();
 }

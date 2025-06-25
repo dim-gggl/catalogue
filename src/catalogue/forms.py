@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import (
     Artwork,
     Art,
+    Artist,
     Collection,
     Comment,
     ContextualReference,
@@ -25,17 +26,17 @@ class CatalogueUserCreationForm(UserCreationForm):
         fields = "__all__"
 
 
-class UserForm(UserChangeForm):
+class CatalogueUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
         fields = ["username", "email", "bio", "profile_picture"]
 
 
-class ArtworkForm(forms.ModelForm):
+class ArtForm(forms.ModelForm):
 
     class Meta:
-        model = Artwork
+        model = Art
         fields = "__all__"
 
     # def __init__(self, *args, **kwargs):
@@ -50,11 +51,134 @@ class ArtworkForm(forms.ModelForm):
     #         choices=[(tech.name, tech.name.upper()) for tech in Technique.objects.all()]
     #     )
 
-class ArtForm(forms.ModelForm):
+class ArtworkForm(forms.ModelForm):
+
+    # Champs pour créer de nouveaux objets
+    new_art_type = forms.CharField(
+        max_length=100, 
+        required=False, 
+        label=_("Nouveau type d'art"),
+        help_text=_("Laissez vide si vous sélectionnez un type existant"),
+        widget=forms.TextInput(attrs={'placeholder': 'Nom du nouveau type d\'art'})
+    )
+    new_support = forms.CharField(
+        max_length=100, 
+        required=False, 
+        label=_("Nouveau support"),
+        help_text=_("Laissez vide si vous sélectionnez un support existant"),
+        widget=forms.TextInput(attrs={'placeholder': 'Nom du nouveau support'})
+    )
+    new_technique = forms.CharField(
+        max_length=100, 
+        required=False, 
+        label=_("Nouvelle technique"),
+        help_text=_("Laissez vide si vous sélectionnez une technique existante"),
+        widget=forms.TextInput(attrs={'placeholder': 'Nom de la nouvelle technique'})
+    )
+    new_artist = forms.CharField(
+        max_length=100,
+        required=False,
+        label=_("Nouvel artiste"),
+        help_text=_("Laissez vide si vous sélectionnez un artiste existant"),
+        widget=forms.TextInput(attrs={'placeholder': 'Nom de l\'artiste'})
+    )
 
     class Meta:
-        model = Art
+        model = Artwork
         fields = "__all__"
+        widgets = {
+            "title": forms.TextInput(attrs={"placeholder": "Titre de l'oeuvre"}),
+            "description": forms.Textarea(attrs={"placeholder": "Cours texte descriptif"}),
+            "image": forms.FileInput(attrs={"placeholder": "Image de l'oeuvre"}),
+            "collection": forms.Select(attrs={"placeholder": "Collection"}),
+            "notes": forms.Textarea(attrs={"placeholder": "Notes"}),
+            "tags": forms.SelectMultiple(attrs={"placeholder": "Mots clés pour référencement"}),
+        }
+        labels = {
+            "title": _("Titre"),
+            "description": _("Description"),
+            "image": _("Image"),
+            "artist": _("Artiste"),
+            "collection": _("Collection"),
+            "art_type": _("Type d'art"),
+            "support": _("Support"),
+            "technique": _("Technique"),
+            "creation_year": _("Année"),
+            "width_cm": _("Largeur (cm)"),
+            "height_cm": _("Hauteur (cm)"),
+            "depth_cm": _("Profondeur (cm)"),
+            "weight_kg": _("Poids (kg)"),
+            "acquisition_date": _("Date d'Acquisition"),
+            "acquisition_place": _("Lieu d'Acquisition"),
+            "price_eur": _("Prix (€)"),
+            "provenance": _("Provenance"),
+            "notes": _("Notes"),
+            "is_framed": _("est encadré"),
+            "is_on_loan": _("est prêté"),
+            "collections": _("Collections"),
+            "tags": _("Étiquettes"),
+            "exhibitions": _("Expositions"),
+            "location": _("Lieu"),
+            "is_signated": _("est signé"),
+            "contextual_references": _("Références contextuelles"),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # Gestion du type d'art
+        art_type = cleaned_data.get('art_type')
+        new_art_type = cleaned_data.get('new_art_type')
+        
+        if not art_type and new_art_type:
+            # Créer un nouveau type d'art
+            art_type, created = Art.objects.get_or_create(name=new_art_type.strip())
+            cleaned_data['art_type'] = art_type
+        elif not art_type and not new_art_type:
+            raise forms.ValidationError(_("Vous devez soit sélectionner un type d'art existant, soit en créer un nouveau."))
+        
+        # Gestion du support
+        support = cleaned_data.get('support')
+        new_support = cleaned_data.get('new_support')
+        
+        if not support and new_support:
+            # Créer un nouveau support
+            support, created = Support.objects.get_or_create(name=new_support.strip())
+            cleaned_data['support'] = support
+        elif not support and not new_support:
+            raise forms.ValidationError(_("Vous devez soit sélectionner un support existant, soit en créer un nouveau."))
+        
+        # Gestion de la technique
+        technique = cleaned_data.get('technique')
+        new_technique = cleaned_data.get('new_technique')
+        
+        if not technique and new_technique:
+            # Créer une nouvelle technique
+            technique, created = Technique.objects.get_or_create(name=new_technique.strip())
+            cleaned_data['technique'] = technique
+        elif not technique and not new_technique:
+            raise forms.ValidationError(_("Vous devez soit sélectionner une technique existante, soit en créer une nouvelle."))
+        
+        artist = cleaned_data.get('artist')
+        new_artist = cleaned_data.get('new_artist')
+        
+        if not artist and new_artist:
+            # Créer un nouvel artiste
+            artist, created = Artist.objects.get_or_create(pseudonym=new_artist.strip())
+            cleaned_data['artist'] = artist
+        
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        
+        # Les objets ont déjà été créés dans clean()
+        if commit:
+            instance.save()
+            self.save_m2m()
+        
+        return instance
+
 
 class CollectionForm(forms.ModelForm):
 
@@ -66,7 +190,12 @@ class Comment(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ["content", "artwork", "user"]
+        labels = {
+            "content": _("Contenu"),
+            "artwork": _("Œuvre"),
+            "user": _("Utilisateur"),
+        }
 
 class ContextualReferenceForm(forms.ModelForm):
 
@@ -90,19 +219,27 @@ class SupportForm(forms.ModelForm):
 
     class Meta:
         model = Support
-        fields = "__all__"
+        fields = ["name", "description"]
+        labels = {
+            "name": _("Nom"),
+            "description": _("Description"),
+        }
 
 class TagForm(forms.ModelForm):
 
     class Meta:
         model = Tag
-        fields = "__all__"
+        fields = ["name"]
 
 class TechniqueForm(forms.ModelForm):
 
     class Meta:
         model = Technique
-        fields = "__all__"
+        fields = ["name", "description"]
+        labels = {
+            "name": _("Nom"),
+            "description": _("Description"),
+        }
 
 class WishlistForm(forms.ModelForm):
 

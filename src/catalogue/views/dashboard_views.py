@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
-from ..models.artwork import Artwork
+from ..models.artwork import Artwork, Artist
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -15,5 +15,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             ).distinct(),
             "loaned_artworks": Artwork.objects.filter(is_on_loan=True),
             "random_artworks": Artwork.objects.order_by('?')[:3],
+            "artists": Artist.objects.all(),
         })
         return context
+
+    # def post_wishlist(self, request, *args, **kwargs):
+        

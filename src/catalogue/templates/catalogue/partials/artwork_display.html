@@ -1,15 +1,32 @@
 <section class="artwork-display-container">
- <ul class="artwork-params-ul">
+  <ul class="artwork-params-ul">
     <h1 class="artwork-params-ul-title">
       {{ artwork.title|default:"Œuvre sans titre" }}
     </h1>
-    <li class="artwork-params">Artiste : {{ artwork.artist|default:"Inconnu" }}</li>
-    <li class="artwork-params">Type : {{ artwork.art_type }}</li>
-    <li class="artwork-params">Support : {{ artwork.support }}</li>
-    <li class="artwork-params">Technique : {{ artwork.technique }}</li>
-    <li class="artwork-params">Dimensions : {{ artwork.width_cm }} × {{ artwork.height_cm }} cm</li>
-    <li class="artwork-params">Prix : {{ artwork.price_eur }} €</p>
-    <li class="artwork-params">Localisation : {{ artwork.location }}</li>
+    {% if artwork.artist %}
+      <li class="artwork-params">Artiste : {{ artwork.artist.pseudonym|default:"Inconnu" }}</li>
+    {% endif %}
+    {% if artwork.art_type %}
+      <li class="artwork-params">Type : {{ artwork.art_type }}</li>
+    {% endif %}
+    {% if artwork.support %}
+      <li class="artwork-params">Support : {{ artwork.support }}</li>
+    {% endif %}
+    {% if artwork.technique %}
+      <li class="artwork-params">Technique : {{ artwork.technique }}</li>
+    {% endif %}
+    {% if artwork.width_cm and artwork.height_cm %}
+      <li class="artwork-params">Dimensions : {{ artwork.width_cm }} × {{ artwork.height_cm }} cm</li>
+    {% endif %}
+    {% if artwork.weight_kg %}
+      <li class="artwork-params">Poids : {{ artwork.weight_kg }} kg</li>
+    {% endif %}
+    {% if artwork.price_eur %}
+      <li class="artwork-params">Prix : {{ artwork.price_eur }} €</li>
+    {% endif %}
+    {% if artwork.location %}
+      <li class="artwork-params">Localisation : {{ artwork.location }}</li>
+    {% endif %}
   </ul>
 
   {% if artwork.is_in_wishlist %}
@@ -22,13 +39,13 @@
   {% endif %}
 
   <hr>
-  <h2>Commentaires</h2>
-  {% for comment in comments %}
+    <h2>Commentaires</h2>
+    {% for comment in comments %}
     <div>
       <strong>{{ comment.user.username }}</strong> le {{ comment.created_at|date:"d/m/Y H:i" }}<br>
       {{ comment.content|linebreaksbr }}
     </div>
-    <hr>
+  <hr>
   {% empty %}
     <p>Aucun commentaire pour le moment.</p>
   {% endfor %}
@@ -42,4 +59,4 @@
   {% else %}
     <p><a href="{% url 'login' %}">Connectez-vous</a> pour commenter cette œuvre.</p>
   {% endif %}
-  </section>
+</section>

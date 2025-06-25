@@ -1,22 +1,22 @@
 {% extends "catalogue/base.html" %}
 {% block content %}
-<h1>Stock</h1>
-<ul>
-  {% for artwork in object_list %}
-    <li><a href="{% url 'artwork_detail' artwork.pk %}">{{ artwork.title|default:"\u0152uvre sans titre" }}</a></li>
-  {% empty %}
-    <li>Aucune \u0153uvre disponible.</li>
-  {% endfor %}
-</ul>
-{% if is_paginated %}
-  <div class="pagination">
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}">Pr\u00e9c\u00e9dent</a>
-    {% endif %}
-    <span class="current">Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
-    {% endif %}
-  </div>
-{% endif %}
+  <h1>Stock</h1>
+  <ul>
+    {% for artwork in object_list %}
+      <li><a href="{% url 'artwork_detail' artwork.pk %}">{{ artwork.title|default:"œuvre sans titre" }}</a></li>
+    {% empty %}
+      <li>Aucune œuvre disponible.</li>
+    {% endfor %}
+  </ul>
+  {% if is_paginated %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+      {% endif %}
+      <span class="current">Page {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
+      {% endif %}
+    </div>
+  {% endif %}
 {% endblock %}

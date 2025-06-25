@@ -1,0 +1,486 @@
+{% load i18n %}
+
+<form method="POST" enctype="multipart/form-data" aria-describedby="form-message">
+    {% csrf_token %}
+    
+    <!-- Informations de base -->
+    <div class="form-section">
+        <h3>{% trans "Informations de base" %}</h3>
+        
+        <div class="form-group">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error-message">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="error-message">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {% if form.image.errors %}
+                <div class="error-message">{{ form.image.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Artiste et Collection -->
+    <div class="form-section">
+        <h3>{% trans "Artiste et Collection" %}</h3>
+        
+        <div class="form-group select-or-create-group">
+            <label>{% trans "Artiste" %}</label>
+            <div class="select-or-create-container">
+                <div class="existing-option">
+                    {{ artists }}
+                    {% if artists.errors %}
+                        <div class="error-message">{{ artists.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="divider">{% trans "OU" %}</div>
+                <div class="new-option">
+                    {{ form.new_artist }}
+                    {% if form.new_artist.errors %}
+                        <div class="error-message">{{ form.new_artist.errors }}</div>
+                    {% endif %}
+                    <small class="help-text">{{ form.new_artist.help_text }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.collection.label_tag }}
+            {{ form.collection }}
+            {% if form.collection.errors %}
+                <div class="error-message">{{ form.collection.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Type d'art, Support et Technique -->
+    <div class="form-section">
+        <h3>{% trans "Classification" %}</h3>
+        
+        <!-- Type d'art -->
+        <div class="form-group select-or-create-group">
+            <label>{% trans "Type d'art" %}</label>
+            <div class="select-or-create-container">
+                <div class="existing-option">
+                    {{ form.art_type }}
+                    {% if form.art_type.errors %}
+                        <div class="error-message">{{ form.art_type.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="divider">{% trans "OU" %}</div>
+                <div class="new-option">
+                    {{ form.new_art_type }}
+                    {% if form.new_art_type.errors %}
+                        <div class="error-message">{{ form.new_art_type.errors }}</div>
+                    {% endif %}
+                    <small class="help-text">{{ form.new_art_type.help_text }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Support -->
+        <div class="form-group select-or-create-group">
+            <label>{% trans "Support" %}</label>
+            <div class="select-or-create-container">
+                <div class="existing-option">
+                    {{ form.support }}
+                    {% if form.support.errors %}
+                        <div class="error-message">{{ form.support.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="divider">{% trans "OU" %}</div>
+                <div class="new-option">
+                    {{ form.new_support }}
+                    {% if form.new_support.errors %}
+                        <div class="error-message">{{ form.new_support.errors }}</div>
+                    {% endif %}
+                    <small class="help-text">{{ form.new_support.help_text }}</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Technique -->
+        <div class="form-group select-or-create-group">
+            <label>{% trans "Technique" %}</label>
+            <div class="select-or-create-container">
+                <div class="existing-option">
+                    {{ form.technique }}
+                    {% if form.technique.errors %}
+                        <div class="error-message">{{ form.technique.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="divider">{% trans "OU" %}</div>
+                <div class="new-option">
+                    {{ form.new_technique }}
+                    {% if form.new_technique.errors %}
+                        <div class="error-message">{{ form.new_technique.errors }}</div>
+                    {% endif %}
+                    <small class="help-text">{{ form.new_technique.help_text }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dimensions et caractéristiques physiques -->
+    <div class="form-section">
+        <h3>{% trans "Dimensions et caractéristiques" %}</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.creation_year.label_tag }}
+                {{ form.creation_year }}
+                {% if form.creation_year.errors %}
+                    <div class="error-message">{{ form.creation_year.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.width_cm.label_tag }}
+                {{ form.width_cm }}
+                {% if form.width_cm.errors %}
+                    <div class="error-message">{{ form.width_cm.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.height_cm.label_tag }}
+                {{ form.height_cm }}
+                {% if form.height_cm.errors %}
+                    <div class="error-message">{{ form.height_cm.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.depth_cm.label_tag }}
+                {{ form.depth_cm }}
+                {% if form.depth_cm.errors %}
+                    <div class="error-message">{{ form.depth_cm.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.weight_kg.label_tag }}
+                {{ form.weight_kg }}
+                {% if form.weight_kg.errors %}
+                    <div class="error-message">{{ form.weight_kg.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-group checkbox-group">
+            {{ form.is_framed }}
+            {{ form.is_framed.label_tag }}
+            {% if form.is_framed.errors %}
+                <div class="error-message">{{ form.is_framed.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group checkbox-group">
+            {{ form.is_signated }}
+            {{ form.is_signated.label_tag }}
+            {% if form.is_signated.errors %}
+                <div class="error-message">{{ form.is_signated.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Acquisition et provenance -->
+    <div class="form-section">
+        <h3>{% trans "Acquisition et provenance" %}</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.acquisition_date.label_tag }}
+                {{ form.acquisition_date }}
+                {% if form.acquisition_date.errors %}
+                    <div class="error-message">{{ form.acquisition_date.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                {{ form.price_eur.label_tag }}
+                {{ form.price_eur }}
+                {% if form.price_eur.errors %}
+                    <div class="error-message">{{ form.price_eur.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.acquisition_place.label_tag }}
+            {{ form.acquisition_place }}
+            {% if form.acquisition_place.errors %}
+                <div class="error-message">{{ form.acquisition_place.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.provenance.label_tag }}
+            {{ form.provenance }}
+            {% if form.provenance.errors %}
+                <div class="error-message">{{ form.provenance.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Localisation et statut -->
+    <div class="form-section">
+        <h3>{% trans "Localisation et statut" %}</h3>
+        
+        <div class="form-group">
+            {{ form.location.label_tag }}
+            {{ form.location }}
+            {% if form.location.errors %}
+                <div class="error-message">{{ form.location.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group checkbox-group">
+            {{ form.is_on_loan }}
+            {{ form.is_on_loan.label_tag }}
+            {% if form.is_on_loan.errors %}
+                <div class="error-message">{{ form.is_on_loan.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Relations -->
+    <div class="form-section">
+        <h3>{% trans "Relations" %}</h3>
+        
+        <div class="form-group">
+            {{ form.collections.label_tag }}
+            {{ form.collections }}
+            {% if form.collections.errors %}
+                <div class="error-message">{{ form.collections.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.tags.label_tag }}
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <div class="error-message">{{ form.tags.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.exhibitions.label_tag }}
+            {{ form.exhibitions }}
+            {% if form.exhibitions.errors %}
+                <div class="error-message">{{ form.exhibitions.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.contextual_references.label_tag }}
+            {{ form.contextual_references }}
+            {% if form.contextual_references.errors %}
+                <div class="error-message">{{ form.contextual_references.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Notes -->
+    <div class="form-section">
+        <h3>{% trans "Notes" %}</h3>
+        
+        <div class="form-group">
+            {{ form.notes.label_tag }}
+            {{ form.notes }}
+            {% if form.notes.errors %}
+                <div class="error-message">{{ form.notes.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Bouton de soumission -->
+    <div class="form-actions">
+        <button type="submit" class="submit-btn">
+            {{ button_text|default:"Enregistrer" }}
+        </button>
+    </div>
+    
+    {% if message %}
+        <p class="form-message" id="form-message" aria-live="polite">{{ message }}</p>
+    {% endif %}
+</form>
+
+<style>
+.form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.select-or-create-group {
+    margin-bottom: 1.5rem;
+}
+
+.select-or-create-container {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    background-color: white;
+}
+
+.existing-option,
+.new-option {
+    margin-bottom: 0.5rem;
+}
+
+.divider {
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+    color: #666;
+    font-weight: bold;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 0 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+}
+
+.help-text {
+    color: #666;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .select-or-create-container {
+        padding: 0.75rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de l'interaction entre sélection existante et création nouvelle
+    const selectOrCreateGroups = document.querySelectorAll('.select-or-create-group');
+    
+    selectOrCreateGroups.forEach(function(group) {
+        const existingSelect = group.querySelector('select');
+        const newInput = group.querySelector('input[type="text"]');
+        
+        if (existingSelect && newInput) {
+            // Désactiver l'autre champ quand l'un est utilisé
+            existingSelect.addEventListener('change', function() {
+                if (this.value) {
+                    newInput.value = '';
+                    newInput.disabled = true;
+                } else {
+                    newInput.disabled = false;
+                }
+            });
+            
+            newInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    existingSelect.value = '';
+                    existingSelect.disabled = true;
+                } else {
+                    existingSelect.disabled = false;
+                }
+            });
+        }
+    });
+});
+</script> 

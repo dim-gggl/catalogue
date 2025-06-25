@@ -1,1 +1,7 @@
 {% extends "catalogue/base.html" %}
+
+{% block content %}
+  <a href="{% url 'dashboard' %}">Dashboard</a>
+  <a href="{% url 'stock' %}">Stock</a>
+  <a href="{% url 'artwork_add' %}">Nouvelle œuvre</a>
+{% endblock %}

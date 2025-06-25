@@ -1,7 +1,9 @@
 {% extends "catalogue/base.html" %}
 {% block content %}
-<h1>Nouvelle Oeuvre</h1>
-{% with button_text="Enregistrer" %}
-  {% include "catalogue/partials/forms.html" %}
-{% endwith %}
+<section class="artwork-container">
+  <h1>{% if form.instance.pk %}Modifier l'œuvre{% else %}Nouvelle œuvre{% endif %}</h1>
+  {% with button_text="Enregistrer" %}
+    {% include "catalogue/partials/artwork_form_fields.html" %}
+  {% endwith %}
+</section>
 {% endblock %}
