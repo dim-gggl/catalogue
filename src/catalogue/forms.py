@@ -2,17 +2,38 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
-from .models import *
+from .models import (
+    Artwork,
+    Art,
+    Collection,
+    Comment,
+    ContextualReference,
+    Exhibition,
+    Location,
+    Support,
+    Tag,
+    Technique,
+    Wishlist,
+    User,
+)
 
 
 class CatalogueUserCreationForm(UserCreationForm):
+
     class Meta:
         model = User
         fields = "__all__"
 
 
+class UserForm(UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "bio", "profile_picture"]
+
+
 class ArtworkForm(forms.ModelForm):
+
     class Meta:
         model = Artwork
         fields = "__all__"
@@ -30,51 +51,61 @@ class ArtworkForm(forms.ModelForm):
     #     )
 
 class ArtForm(forms.ModelForm):
+
     class Meta:
         model = Art
         fields = "__all__"
 
 class CollectionForm(forms.ModelForm):
+
     class Meta:
         model = Collection
         fields = "__all__"
 
 class Comment(forms.ModelForm):
+
     class Meta:
         model = Comment
         fields = "__all__"
 
 class ContextualReferenceForm(forms.ModelForm):
+
     class Meta:
         model = ContextualReference
         fields = "__all__"
 
 class ExhibitionForm(forms.ModelForm):
+
     class Meta:
         model = Exhibition
         fields = "__all__"
 
 class LocationForm(forms.ModelForm):
+
     class Meta:
         model = Location
         fields = "__all__"
 
 class SupportForm(forms.ModelForm):
+
     class Meta:
         model = Support
         fields = "__all__"
 
 class TagForm(forms.ModelForm):
+
     class Meta:
         model = Tag
         fields = "__all__"
 
 class TechniqueForm(forms.ModelForm):
+
     class Meta:
         model = Technique
         fields = "__all__"
 
 class WishlistForm(forms.ModelForm):
+
     class Meta:
         model = Wishlist
         fields = "__all__"

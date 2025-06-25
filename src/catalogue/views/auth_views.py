@@ -23,7 +23,7 @@ class SignUpView(View):
     form_class = SignUpForm
 
     def get(self, request):
-        form = self.form_class
+        form = self.form_class()
         return render(
             request=request,
             template_name="catalogue/signup.html",

@@ -1,0 +1,7 @@
+{% extends "catalogue/base.html" %}
+{% block content %}
+<h1>Nouvelle Oeuvre</h1>
+{% with button_text="Enregistrer" %}
+  {% include "catalogue/partials/forms.html" %}
+{% endwith %}
+{% endblock %}

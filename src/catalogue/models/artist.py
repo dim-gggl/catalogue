@@ -15,16 +15,12 @@ class Artist(models.Model):
         return self.pseudonym
 
     @pseudonym.setter
-    def pseudonym(self, value):
-        if value:
-            self.pseudonym = value
-        if not self.pseudonym and not value:
-            if any(self.first_name, self.last_name):
-                self.pseudonym = self.first_name + " " + self.last_name
-            else:
-                self.pseudonym = "Unknown"
-            
+    def display_name(self):
+        """Return a user friendly name for the artist."""
+        if self.pseudonym:
+            return self.pseudonym
+        name = f"{self.first_name} {self.last_name}".strip()
+        return name or "Unknown artist"
+
     def __str__(self):
-        return (
-            f"{self.first_name} {self.last_name}".strip() or "Unknown artist"
-        )
+        return self.display_name

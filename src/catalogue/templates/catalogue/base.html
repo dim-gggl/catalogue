@@ -15,6 +15,9 @@
       <h1 class="banner-title"><a href="/" class="banner-title logo">catalogue</a></h1>
       <nav class="navbar">
         {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <a href="{% url 'stock' %}">Stock</a>
+          <a href="{% url 'artwork_add' %}">Nouvelle œuvre</a>
           Bonjour {{ user.username }} · <a href="{% url 'logout' %}" class="navbar-connect-link">Se déconnecter</a>
         {% else %}
           <a href="{% url 'login' %}">Connexion</a> · <a href="{% url 'signup' %}" class="navbar-signup-link">Inscription</a>

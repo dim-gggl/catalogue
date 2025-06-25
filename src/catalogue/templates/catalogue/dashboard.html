@@ -1,0 +1,41 @@
+{% extends "catalogue/base.html" %}
+
+{% block content %}
+<h2>Tableau de bord</h2>
+
+<section>
+  <h3>Œuvres exposées ({{ exhibited_artworks|length }})</h3>
+  <ul>
+    {% for artwork in exhibited_artworks %}
+      <li>{{ artwork.title }}</li>
+    {% empty %}
+      <li>Aucune œuvre exposée.</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h3>Œuvres prêtées ({{ loaned_artworks|length }})</h3>
+  <ul>
+    {% for artwork in loaned_artworks %}
+      <li>{{ artwork.title }}</li>
+    {% empty %}
+      <li>Aucune œuvre en prêt.</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h3>Sélection aléatoire</h3>
+  {% for artwork in random_artworks %}
+    {% include "catalogue/partials/artwork_display.html" with artwork=artwork %}
+  {% empty %}
+    <p>Aucune œuvre disponible.</p>
+  {% endfor %}
+</section>
+
+<div class="dashboard-actions">
+  <a href="{% url 'stock' %}" class="button">Voir le stock</a>
+  <a href="{% url 'artwork_add' %}" class="button">Ajouter une œuvre</a>
+</div>
+{% endblock %}

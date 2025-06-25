@@ -2,7 +2,7 @@ from .art import Art
 from .artist import Artist
 from .support import Support
 from .artwork import Artwork
-from .artwork import (ART_TYPES, TECHNIQUES, SUPPORTS)
+from ..art_constants import (ART_TYPES, TECHNIQUES, SUPPORTS)
 from .technique import Technique
 from .collection import Collection
 from .tag import Tag
