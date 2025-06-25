@@ -125,7 +125,6 @@ a.login-submit-btn {
 
 form p > input {
     background-color: var(--bg-color);
-    background-color: ;
     font-family: var(--reg-font);
     font-size: 0.8rem;
     padding-inline: 1vw;
