@@ -14,7 +14,7 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="signup"),
     path("stock/", StockListView.as_view(), name="stock"),
     path("artworks/add/", ArtworkCreateView.as_view(), name="artwork_add"),
-    path("artworks/<int:pk>/", ArtworkDetailView.as_view(), name="artwork_detail"),
+    path("artworks/<int:pk>/", ArtworkDetailView.as_view(), name="artwork_display"),
 ]
 
 

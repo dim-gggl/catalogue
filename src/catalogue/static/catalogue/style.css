@@ -3,6 +3,8 @@
     --fg-color: #151515;
     --logo-font: "Genos", sans-serif;
     --reg-font: "Phetsarath", serif;
+    --petrona-font: "Petrona", serif;
+    --urbanist-font: "Urbanist", sans-serif;
     --txt-shadow: 1px -1px 1px #000000, -1px 1px 1px #FFFFFF;
     --pop-color: #d82768;
     --border: 1px solid #000000;
@@ -31,12 +33,33 @@ body {
     font-family: var(--logo-font);
     color: var(--bg-color);
     text-decoration: none;
+    font-style: italic;
     font-size: 3rem;
+    text-shadow: 2px -2px 2px #00000060, -2px 2px 2px #FFFFFF60;
+    animation: breathing 9s infinite ease-in-out;
 }
 
-header,
-footer {
-    background-color: var(--fg-color);
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--petrona-font);
+    font-weight: 100;
+
+}
+
+@keyframes breathing {
+    0% {
+        font-weight: 100;
+    }
+    50% {
+        font-weight: 900;
+    }
+    100% {
+        font-weight: 100;
+    }
+}
+
+header, footer {
+    background-color: #50221b;
+    background: linear-gradient(115deg, #50221b, #6d0701);
     color: var(--bg-color);
     padding: 1rem;
     text-align: center;
@@ -75,7 +98,8 @@ select {
 	border: 1px solid #FFFFFF45; */
 	/* color: #a4a4a4; */
 	text-shadow: 1px -1px 1px #ffffff50, -1px 1px 1px #00000050;
-	font-family: "Bebas Neue", sans-serif;
+	font-family: var(--urbanist-font);
+	font-weight: 200;
 	letter-spacing: 1px;
 }
 
@@ -104,8 +128,8 @@ main {
 }
 
 .form-title {
-	font-family: var(--reg-font);
-	font-weight: 900;
+	font-family: var(--petrona-font);
+	font-weight: 100;
 	text-align: center;
 	font-size: 24px;
 }
@@ -133,7 +157,7 @@ textarea {
 
 a.login-submit-btn {
     padding: 0.6rem 2rem;
-    border: 1px solid #FFFFFF50;
+    border: var(--border);
     border-radius: 13px;
     margin: 1vh auto;
 
@@ -147,9 +171,9 @@ form p > input {
     border-radius: 4px;
 }
 .form-title form p > label {
-    font-weight: 400;
+    font-weight: 600;
     font-size: 16px;
-    font-family: "Fira Code", monospace;
+    font-family: var(--urbanist-font);
 }
 .login-page > .form-container {
     margin: 6vh auto;
@@ -178,7 +202,7 @@ form p > input {
   }
   
   .artwork-container p input, .artwork-container p select {
-    border: 1px solid #00000040;
+    border: var(--border);
     min-height: 3vh;
     background: var(--bg-color);
     background-color: var(--bg-color);
@@ -189,10 +213,11 @@ button.login-submit-btn {
     padding-block: 1vh;
     font-size: 1.2rem;
     text-transform: uppercase;
-    font-family: Noto Sans, sans-serif;
-    font-weight: 300;
+    font-family: var(--urbanist-font);
+    font-weight: 400;
     transition: transform 0.3s ease;
 }
+
 button.login-submit-btn:hover {
-    transform: translate();
+    transform: translateY(-4px);
 }

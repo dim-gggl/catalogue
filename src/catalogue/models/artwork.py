@@ -76,6 +76,7 @@ class Artwork(models.Model):
     contextual_references = models.ManyToManyField(
         ContextualReference, blank=True, related_name="artworks"
     )
+    images = models.ImageField(upload_to="media/artworks/", blank=True)
 
     def is_in_wishlist(self, user):
         return self in user.wishlist

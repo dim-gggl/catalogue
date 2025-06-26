@@ -40,9 +40,10 @@
             <label>{% trans "Artiste" %}</label>
             <div class="select-or-create-container">
                 <div class="existing-option">
-                    {{ artists }}
-                    {% if artists.errors %}
-                        <div class="error-message">{{ artists.errors }}</div>
+                    {# artists #}
+                    {{ form.artists }}
+                    {% if form.artists.errors %}
+                        <div class="error-message">{{ form.artists.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="divider">{% trans "OU" %}</div>

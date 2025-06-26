@@ -3,7 +3,7 @@
   <h1>Stock</h1>
   <ul>
     {% for artwork in object_list %}
-      <li><a href="{% url 'artwork_detail' artwork.pk %}">{{ artwork.title|default:"œuvre sans titre" }}</a></li>
+      <li><a href="{% url 'artwork_display' artwork.pk %}">{{ artwork.title|default:"œuvre sans titre" }}</a></li>
     {% empty %}
       <li>Aucune œuvre disponible.</li>
     {% endfor %}
