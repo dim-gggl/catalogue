@@ -6,7 +6,10 @@
     --petrona-font: "Petrona", serif;
     --urbanist-font: "Urbanist", sans-serif;
     --txt-shadow: 1px -1px 1px #000000, -1px 1px 1px #FFFFFF;
-    --pop-color: #d82768;
+    --pop-color: #b0220d;
+    --blue-color: #2255a7e2;
+    --gray-color: #333333E6;
+    --light-gray-color: #666666E6;
     --border: 1px solid #000000;
     --rem: 16px;
 }
@@ -20,23 +23,32 @@ html {
     font-size: var(--rem);
     font-family: var(--reg-font);
     background: #00000050;
+    max-width: 100vw;
 }
 
 body {
     font-family: var(--reg-font);
-    margin: 0;
+    margin: 0px;
     background-color: var(--bg-color);
     color: var(--fg-color);
+    max-width: 100vw;
 }
 
 .logo {
-    font-family: var(--logo-font);
-    color: var(--bg-color);
-    text-decoration: none;
-    font-style: italic;
-    font-size: 3rem;
-    text-shadow: 2px -2px 2px #00000060, -2px 2px 2px #FFFFFF60;
-    animation: breathing 9s infinite ease-in-out;
+	font-family: var(--logo-font);
+	color: var(--bg-color);
+	text-decoration: none;
+	font-style: italic;
+	font-size: 5rem;
+	/* text-shadow: 3px -3px 2px #00000060, -3px 3px 2px #FFFFFF60; */
+    text-shadow: 1px -1px 2px #000000c1, -1px 1px 2px #FFFFFFE6;
+	animation: breathing 9s infinite ease-in-out;
+}
+
+h1 {
+    /* font-size: 68px; */
+    font-size: 101px;
+    text-align: center;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -48,18 +60,21 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes breathing {
     0% {
         font-weight: 100;
+        transform: scale(1);
     }
     50% {
         font-weight: 900;
+        transform: scale(1.3);
     }
     100% {
         font-weight: 100;
+        transform: scale(1);
     }
 }
 
 header, footer {
-    background-color: #50221b;
-    background: linear-gradient(115deg, #50221b, #6d0701);
+    /* background-color: #50221b; */
+    background: linear-gradient(115deg, #401f1a, #652b21);
     color: var(--bg-color);
     padding: 1rem;
     text-align: center;
@@ -97,7 +112,7 @@ select {
 	/* border-radius: 10px;
 	border: 1px solid #FFFFFF45; */
 	/* color: #a4a4a4; */
-	text-shadow: 1px -1px 1px #ffffff50, -1px 1px 1px #00000050;
+	text-shadow: 1px -1px 1px #ffffffc4, -1px 1px 1px #00000050;
 	font-family: var(--urbanist-font);
 	font-weight: 200;
 	letter-spacing: 1px;
@@ -127,11 +142,10 @@ main {
     margin: 6vh auto;
 }
 
-.form-title {
-	font-family: var(--petrona-font);
-	font-weight: 100;
-	text-align: center;
-	font-size: 24px;
+#signup-invitation-title, .form-title {
+	font-weight: 31;
+	font-size: 32px;
+	text-transform: uppercase;
 }
 
 .form-title form p > label {
@@ -206,18 +220,188 @@ form p > input {
     min-height: 3vh;
     background: var(--bg-color);
     background-color: var(--bg-color);
+  }
+  
+  button.login-submit-btn {
+      min-width: 100%;
+      padding-block: 1vh;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      font-family: var(--urbanist-font);
+      font-weight: 400;
+      transition: transform 0.3s ease;
+  }
+  
+  button.login-submit-btn:hover {
+      transform: translateY(-4px);
+  }
+  
+  .card-img-top-placeholder {
+      height: 200px; /* Or your desired image height */
+      background-color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-style: italic;
+      border-bottom: 1px solid #dee2e6;
+  }
+  
+  .form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #8a8a8a53;
 }
 
-button.login-submit-btn {
-    min-width: 100%;
-    padding-block: 1vh;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    font-family: var(--urbanist-font);
-    font-weight: 400;
-    transition: transform 0.3s ease;
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--gray-color);
+    border-bottom: 2px solid var(--blue-color);
+    padding-bottom: 0.5vh;
 }
 
-button.login-submit-btn:hover {
-    transform: translateY(-4px);
+.form-group {
+    margin-bottom: 1vh;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.select-or-create-group {
+    margin-bottom: 1.5rem;
+}
+
+.select-or-create-container {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    background-color: white;
+}
+
+.existing-option,
+.new-option {
+    margin-bottom: 0.5rem;
+}
+
+.divider {
+    text-align: center;
+    margin: 1rem 0;
+    position: relative;
+    color: #666;
+    font-weight: bold;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ddd;
+}
+
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-color);
+    padding: 0 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+}
+
+.help-text {
+    color: #666;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .select-or-create-container {
+        padding: 0.75rem;
+    }
+}
+  
+  @media screen and (max-width: 468px) {
+  
+    :root {
+        --rem: 12px;
+    }
+
+    * {
+        max-width: 100vw;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 48px;
+
+    }
+
+    .logo {
+        font-size: 3.7rem;
+    }
+
+    .navbar {
+        max-width: 55vw;
+    }
+
+    html {
+        font-size: 0.8rem;
+    }
 }

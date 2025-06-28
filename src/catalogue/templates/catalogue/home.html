@@ -1,7 +1,9 @@
 {% extends "catalogue/base.html" %}
-
+{% load i18n %}
 {% block content %}
-  <a href="{% url 'dashboard' %}">Dashboard</a>
-  <a href="{% url 'stock' %}">Stock</a>
-  <a href="{% url 'artwork_add' %}">Nouvelle œuvre</a>
+  <a href="{% url 'dashboard' %}">{% translate "Dashboard" %}</a>
+  <a href="{% url 'stock' %}">{% translate "Stock" %}</a>
+  <a href="{% url 'artwork_add' %}">{% translate "Nouvelle œuvre" %}</a>
+  <a href="{% url 'exposed_artworks' %}">{% translate "Oeuvres exposées" %}</a>
+  <a href="{% url 'wishlist' %}" class="navbar-link">{% translate "My Wishlist" %}</a>
 {% endblock %}

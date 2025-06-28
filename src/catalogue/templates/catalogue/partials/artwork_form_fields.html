@@ -4,10 +4,10 @@
     {% csrf_token %}
     
     <!-- Informations de base -->
-    <div class="form-section">
+    <div class="form-section form-section-base">
         <h3>{% trans "Informations de base" %}</h3>
         
-        <div class="form-group">
+        <div class="form-group form-title">
             {{ form.title.label_tag }}
             {{ form.title }}
             {% if form.title.errors %}
@@ -15,7 +15,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-description">
             {{ form.description.label_tag }}
             {{ form.description }}
             {% if form.description.errors %}
@@ -23,27 +23,35 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
-            {{ form.image.label_tag }}
-            {{ form.image }}
-            {% if form.image.errors %}
-                <div class="error-message">{{ form.image.errors }}</div>
+        
+        <div class="form-group form-images">
+            {{ form.images.label_tag }}
+            {{ form.images }}
+            <button type="button" id="start-camera-btn" class="btn btn-secondary btn-sm">{% translate "Take Photo" %}</button>
+            {% if form.images.errors %}
+                <div class="error-message">{{ form.images.errors }}</div>
             {% endif %}
+        </div>
+        <div id="camera-container" style="display: none;">
+            <video id="camera-stream" width="640" height="480" autoplay></video>
+            <button type="button" id="capture-photo-btn" class="btn btn-primary btn-sm">{% translate "Capture" %}</button>
+            <canvas id="photo-canvas" width="320" height="240" style="display: none;"></canvas>
+            <img id="captured-photo-preview" src="#" alt="Captured photo" style="display: none; max-width: 320px; margin-top: 10px;">
         </div>
     </div>
     
     <!-- Artiste et Collection -->
-    <div class="form-section">
+    <div class="form-section form-section-artist-collection">
         <h3>{% trans "Artiste et Collection" %}</h3>
         
-        <div class="form-group select-or-create-group">
+        <div class="form-group select-or-create-group form-artist">
             <label>{% trans "Artiste" %}</label>
             <div class="select-or-create-container">
                 <div class="existing-option">
                     {# artists #}
                     {{ form.artists }}
-                    {% if form.artists.errors %}
-                        <div class="error-message">{{ form.artists.errors }}</div>
+                    {% if form.artist.errors %}
+                        <div class="error-message">{{ form.artist.errors }}</div>
                     {% endif %}
                 </div>
                 <div class="divider">{% trans "OU" %}</div>
@@ -71,9 +79,9 @@
         <h3>{% trans "Classification" %}</h3>
         
         <!-- Type d'art -->
-        <div class="form-group select-or-create-group">
+        <div class="form-group select-or-create-group form-art-type">
             <label>{% trans "Type d'art" %}</label>
-            <div class="select-or-create-container">
+            <div class="select-or-create-container form-art-type">
                 <div class="existing-option">
                     {{ form.art_type }}
                     {% if form.art_type.errors %}
@@ -92,9 +100,9 @@
         </div>
         
         <!-- Support -->
-        <div class="form-group select-or-create-group">
+        <div class="form-group select-or-create-group form-support">
             <label>{% trans "Support" %}</label>
-            <div class="select-or-create-container">
+            <div class="select-or-create-container form-support">
                 <div class="existing-option">
                     {{ form.support }}
                     {% if form.support.errors %}
@@ -113,9 +121,9 @@
         </div>
         
         <!-- Technique -->
-        <div class="form-group select-or-create-group">
+        <div class="form-group select-or-create-group form-technique">
             <label>{% trans "Technique" %}</label>
-            <div class="select-or-create-container">
+            <div class="select-or-create-container form-technique">
                 <div class="existing-option">
                     {{ form.technique }}
                     {% if form.technique.errors %}
@@ -135,11 +143,11 @@
     </div>
     
     <!-- Dimensions et caractéristiques physiques -->
-    <div class="form-section">
+    <div class="form-section form-section-dimensions-characteristics">
         <h3>{% trans "Dimensions et caractéristiques" %}</h3>
         
         <div class="form-row">
-            <div class="form-group">
+            <div class="form-group form-creation-year">
                 {{ form.creation_year.label_tag }}
                 {{ form.creation_year }}
                 {% if form.creation_year.errors %}
@@ -147,7 +155,7 @@
                 {% endif %}
             </div>
             
-            <div class="form-group">
+            <div class="form-group form-width-cm">
                 {{ form.width_cm.label_tag }}
                 {{ form.width_cm }}
                 {% if form.width_cm.errors %}
@@ -155,7 +163,7 @@
                 {% endif %}
             </div>
             
-            <div class="form-group">
+            <div class="form-group form-height-cm">
                 {{ form.height_cm.label_tag }}
                 {{ form.height_cm }}
                 {% if form.height_cm.errors %}
@@ -165,7 +173,7 @@
         </div>
         
         <div class="form-row">
-            <div class="form-group">
+            <div class="form-group form-depth-cm">
                 {{ form.depth_cm.label_tag }}
                 {{ form.depth_cm }}
                 {% if form.depth_cm.errors %}
@@ -173,7 +181,7 @@
                 {% endif %}
             </div>
             
-            <div class="form-group">
+            <div class="form-group form-weight-kg">
                 {{ form.weight_kg.label_tag }}
                 {{ form.weight_kg }}
                 {% if form.weight_kg.errors %}
@@ -182,7 +190,7 @@
             </div>
         </div>
         
-        <div class="form-group checkbox-group">
+        <div class="form-group checkbox-group form-is-framed">
             {{ form.is_framed }}
             {{ form.is_framed.label_tag }}
             {% if form.is_framed.errors %}
@@ -190,7 +198,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group checkbox-group">
+        <div class="form-group checkbox-group form-is-signated">
             {{ form.is_signated }}
             {{ form.is_signated.label_tag }}
             {% if form.is_signated.errors %}
@@ -200,11 +208,11 @@
     </div>
     
     <!-- Acquisition et provenance -->
-    <div class="form-section">
+    <div class="form-section form-section-acquisition-provenance">
         <h3>{% trans "Acquisition et provenance" %}</h3>
         
         <div class="form-row">
-            <div class="form-group">
+            <div class="form-group form-acquisition-date">
                 {{ form.acquisition_date.label_tag }}
                 {{ form.acquisition_date }}
                 {% if form.acquisition_date.errors %}
@@ -212,7 +220,7 @@
                 {% endif %}
             </div>
             
-            <div class="form-group">
+            <div class="form-group form-price-eur">
                 {{ form.price_eur.label_tag }}
                 {{ form.price_eur }}
                 {% if form.price_eur.errors %}
@@ -221,7 +229,7 @@
             </div>
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-acquisition-place">
             {{ form.acquisition_place.label_tag }}
             {{ form.acquisition_place }}
             {% if form.acquisition_place.errors %}
@@ -229,7 +237,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-provenance">
             {{ form.provenance.label_tag }}
             {{ form.provenance }}
             {% if form.provenance.errors %}
@@ -239,10 +247,10 @@
     </div>
     
     <!-- Localisation et statut -->
-    <div class="form-section">
+    <div class="form-section form-section-location-status">
         <h3>{% trans "Localisation et statut" %}</h3>
         
-        <div class="form-group">
+        <div class="form-group form-location">
             {{ form.location.label_tag }}
             {{ form.location }}
             {% if form.location.errors %}
@@ -250,7 +258,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group checkbox-group">
+        <div class="form-group checkbox-group form-is-on-loan">
             {{ form.is_on_loan }}
             {{ form.is_on_loan.label_tag }}
             {% if form.is_on_loan.errors %}
@@ -260,10 +268,10 @@
     </div>
     
     <!-- Relations -->
-    <div class="form-section">
+    <div class="form-section form-section-relations">
         <h3>{% trans "Relations" %}</h3>
         
-        <div class="form-group">
+        <div class="form-group form-collections">
             {{ form.collections.label_tag }}
             {{ form.collections }}
             {% if form.collections.errors %}
@@ -271,7 +279,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-tags">
             {{ form.tags.label_tag }}
             {{ form.tags }}
             {% if form.tags.errors %}
@@ -279,7 +287,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-exhibitions">
             {{ form.exhibitions.label_tag }}
             {{ form.exhibitions }}
             {% if form.exhibitions.errors %}
@@ -287,7 +295,7 @@
             {% endif %}
         </div>
         
-        <div class="form-group">
+        <div class="form-group form-contextual-references">
             {{ form.contextual_references.label_tag }}
             {{ form.contextual_references }}
             {% if form.contextual_references.errors %}
@@ -297,10 +305,10 @@
     </div>
     
     <!-- Notes -->
-    <div class="form-section">
+                    <div class="form-section form-section-notes">
         <h3>{% trans "Notes" %}</h3>
         
-        <div class="form-group">
+        <div class="form-group form-notes">
             {{ form.notes.label_tag }}
             {{ form.notes }}
             {% if form.notes.errors %}
@@ -322,139 +330,72 @@
 </form>
 
 <style>
-.form-section {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #fafafa;
-}
 
-.form-section h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    color: #333;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 0.5rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-}
-
-.select-or-create-group {
-    margin-bottom: 1.5rem;
-}
-
-.select-or-create-container {
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 1rem;
-    background-color: white;
-}
-
-.existing-option,
-.new-option {
-    margin-bottom: 0.5rem;
-}
-
-.divider {
-    text-align: center;
-    margin: 1rem 0;
-    position: relative;
-    color: #666;
-    font-weight: bold;
-}
-
-.divider::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #ddd;
-}
-
-.divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 0 10px;
-}
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.checkbox-group input[type="checkbox"] {
-    margin: 0;
-}
-
-.help-text {
-    color: #666;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
-
-.error-message {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
-
-.form-actions {
-    margin-top: 2rem;
-    text-align: center;
-}
-
-.submit-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 0.75rem 2rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.submit-btn:hover {
-    background-color: #0056b3;
-}
-
-.form-message {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    text-align: center;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .select-or-create-container {
-        padding: 0.75rem;
-    }
-}
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const startCameraButton = document.getElementById('start-camera-btn');
+    const cameraContainer = document.getElementById('camera-container');
+    const cameraStream = document.getElementById('camera-stream');
+    const capturePhotoButton = document.getElementById('capture-photo-btn');
+    const photoCanvas = document.getElementById('photo-canvas');
+    const capturedPhotoPreview = document.getElementById('captured-photo-preview');
+    const imageInput = document.querySelector('input[name="{{ form.images.html_name }}"]'); // Get the actual input field
+    let stream = null;
+
+    if (startCameraButton) {
+        startCameraButton.addEventListener('click', async () => {
+            if (stream) { // If stream exists, stop it and hide container
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+                cameraContainer.style.display = 'none';
+                startCameraButton.textContent = '{% translate "Take Photo" %}';
+                return;
+            }
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                cameraStream.srcObject = stream;
+                cameraContainer.style.display = 'block';
+                startCameraButton.textContent = '{% translate "Close Camera" %}';
+                capturedPhotoPreview.style.display = 'none'; // Hide previous preview
+            } catch (err) {
+                console.error("{% translate 'Error accessing camera:' %}", err);
+                alert("{% translate 'Could not access the camera. Please ensure permissions are granted.' %}");
+            }
+        });
+    }
+
+    if (capturePhotoButton) {
+        capturePhotoButton.addEventListener('click', () => {
+            if (!stream) return;
+            const context = photoCanvas.getContext('2d');
+            context.drawImage(cameraStream, 0, 0, photoCanvas.width, photoCanvas.height);
+            
+            // Show preview
+            const dataUrl = photoCanvas.toDataURL('image/png');
+            capturedPhotoPreview.src = dataUrl;
+            capturedPhotoPreview.style.display = 'block';
+
+            // Convert Data URL to File object and assign to file input
+            photoCanvas.toBlob(function(blob) {
+                const fileName = `captured_image_${Date.now()}.png`;
+                const file = new File([blob], fileName, { type: 'image/png' });
+                
+                // Create a DataTransfer to simulate file selection
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                imageInput.files = dataTransfer.files;
+
+                // Optionally, stop the camera stream after capture
+                // stream.getTracks().forEach(track => track.stop());
+                // cameraContainer.style.display = 'none';
+                // startCameraButton.textContent = '{% translate "Take Photo" %}';
+
+            }, 'image/png');
+        });
+    }
+
     // Gestion de l'interaction entre sélection existante et création nouvelle
     const selectOrCreateGroups = document.querySelectorAll('.select-or-create-group');
     

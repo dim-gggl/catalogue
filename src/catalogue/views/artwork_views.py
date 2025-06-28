@@ -1,6 +1,10 @@
 from django.views.generic import DetailView, CreateView, ListView
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from ..models.artwork import Artwork, Artist
+from ..models.wishlist import Wishlist
 from ..forms import ArtworkForm
 
 
@@ -11,6 +15,15 @@ class ArtworkDetailView(DetailView):
 
     def get_queryset(self):
         return Artwork.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            wishlist, created = Wishlist.objects.get_or_create(user=self.request.user)
+            context['artwork_in_wishlist'] = wishlist.is_in_wishlist(self.object)
+        else:
+            context['artwork_in_wishlist'] = False
+        return context
 
 
 class StockListView(ListView):
@@ -63,4 +76,23 @@ class ArtworkCreateView(CreateView):
         form = super().get_form(form_class)
         form.fields["artist"].queryset = Artist.objects.all()
         return form
-    
+
+
+class ExposedArtworksView(ListView):
+    """Displays artworks currently part of an active exhibition."""
+    model = Artwork
+    template_name = "catalogue/exposed_artworks.html"
+    context_object_name = "artworks"
+    paginate_by = 20
+
+    def get_queryset(self):
+        today = timezone.now().date()
+        return Artwork.objects.filter(
+            exhibitions__start_date__lte=today,
+            exhibitions__end_date__gte=today
+        ).distinct().order_by('title')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = _("Exposed Artworks")
+        return context

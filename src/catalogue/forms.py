@@ -87,12 +87,12 @@ class ArtworkForm(forms.ModelForm):
         model = Artwork
         fields = "__all__"
         widgets = {
-            "title": forms.TextInput(attrs={"placeholder": "Titre de l'oeuvre"}),
-            "description": forms.Textarea(attrs={"placeholder": "Cours texte descriptif"}),
-            "image": forms.FileInput(attrs={"placeholder": "Image de l'oeuvre"}),
-            "collection": forms.Select(attrs={"placeholder": "Collection"}),
-            "notes": forms.Textarea(attrs={"placeholder": "Notes"}),
-            "tags": forms.SelectMultiple(attrs={"placeholder": "Mots clés pour référencement"}),
+            "title": forms.TextInput(attrs={"placeholder": _("Titre de l'oeuvre")}),
+            "description": forms.Textarea(attrs={"placeholder": _("Cours texte descriptif")}),
+            "image": forms.FileInput(attrs={"placeholder": _("Image de l'oeuvre")}),
+            "collection": forms.Select(attrs={"placeholder": _("Collection")}),
+            "notes": forms.Textarea(attrs={"placeholder": _("Notes")}),
+            "tags": forms.SelectMultiple(attrs={"placeholder": _("Mots clés pour référencement")}),
         }
         labels = {
             "title": _("Titre"),
@@ -113,8 +113,8 @@ class ArtworkForm(forms.ModelForm):
             "price_eur": _("Prix (€)"),
             "provenance": _("Provenance"),
             "notes": _("Notes"),
-            "is_framed": _("est encadré"),
-            "is_on_loan": _("est prêté"),
+            "is_framed": _("Est encadré"),
+            "is_on_loan": _("Est prêté"),
             "collections": _("Collections"),
             "tags": _("Étiquettes"),
             "exhibitions": _("Expositions"),
@@ -135,7 +135,12 @@ class ArtworkForm(forms.ModelForm):
             art_type, created = Art.objects.get_or_create(name=new_art_type.strip())
             cleaned_data['art_type'] = art_type
         elif not art_type and not new_art_type:
-            raise forms.ValidationError(_("Vous devez soit sélectionner un type d'art existant, soit en créer un nouveau."))
+            raise forms.ValidationError(
+                _(
+                    "Vous devez soit sélectionner un type d'art "
+                    "existant, soit en créer un nouveau."
+                )
+            )
         
         # Gestion du support
         support = cleaned_data.get('support')
@@ -143,10 +148,17 @@ class ArtworkForm(forms.ModelForm):
         
         if not support and new_support:
             # Créer un nouveau support
-            support, created = Support.objects.get_or_create(name=new_support.strip())
+            support, created = Support.objects.get_or_create(
+                name=new_support.strip()
+            )
             cleaned_data['support'] = support
         elif not support and not new_support:
-            raise forms.ValidationError(_("Vous devez soit sélectionner un support existant, soit en créer un nouveau."))
+            raise forms.ValidationError(
+                _(
+                    "Vous devez soit sélectionner un support existant, "
+                    "soit en créer un nouveau."
+                )
+            )
         
         # Gestion de la technique
         technique = cleaned_data.get('technique')
@@ -154,17 +166,26 @@ class ArtworkForm(forms.ModelForm):
         
         if not technique and new_technique:
             # Créer une nouvelle technique
-            technique, created = Technique.objects.get_or_create(name=new_technique.strip())
+            technique, created = Technique.objects.get_or_create(
+                name=new_technique.strip()
+            )
             cleaned_data['technique'] = technique
         elif not technique and not new_technique:
-            raise forms.ValidationError(_("Vous devez soit sélectionner une technique existante, soit en créer une nouvelle."))
+            raise forms.ValidationError(
+                _(
+                    "Vous devez soit sélectionner une technique "
+                    "existante, soit en créer une nouvelle."
+                )
+            )
         
         artist = cleaned_data.get('artist')
         new_artist = cleaned_data.get('new_artist')
         
         if not artist and new_artist:
             # Créer un nouvel artiste
-            artist, created = Artist.objects.get_or_create(pseudonym=new_artist.strip())
+            artist, created = Artist.objects.get_or_create(
+                pseudonym=new_artist.strip()
+            )
             cleaned_data['artist'] = artist
         
         return cleaned_data
