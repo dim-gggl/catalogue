@@ -13,18 +13,20 @@ class CatalogueUserAdmin(UserAdmin):
     list_display = ["email", "is_staff", "is_active"]
     list_filter  = ["is_staff", "is_active"]
     fieldsets = [
-        ("Personal info", 
-            {"fields": ["email", "password", "birth_date",]}
-        ),
-        {"fields": ["is_staff","is_active","is_superuser","groups"]},
-    ],
-    add_fieldsets = [
-        {"classes": ["wide",],
-        "fields": ["email", "password1", "password2", "is_staff", "is_active"]
-        },
+        (_("Personal info"), {"fields": ["email", "password", "birth_date"]}),
+        (_("Permissions"), {"fields": ["is_staff", "is_active", "is_superuser", "groups"]}),
     ]
-    search_fields = ["email",]
-    ordering = ["email",]
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ["wide"],
+                "fields": ["email", "password1", "password2", "is_staff", "is_active"],
+            },
+        ),
+    )
+    search_fields = ["email"]
+    ordering = ["email"]
     
 
 admin.site.register(Collection)
@@ -36,25 +38,25 @@ admin.site.register(Wishlist)
 
 @admin.register(Art)
 class ArtAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ["name"]
 
 @admin.register(Support)
 class SupportAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ["name"]
 
 @admin.register(Technique)
 class TechniqueAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ["name"]
 
 @admin.register(Artist)
 class ArtistAdmin(admin.ModelAdmin):
-    list_display = ['pseudonym', 'birth_year']
+    list_display = ["pseudonym", "birth_year"]
 
 @admin.register(Artwork)
 class ArtworkAdmin(admin.ModelAdmin):
-    list_display = ['title', 'artist', 'art_type', 'support', 'technique']
-    list_filter = ['art_type', 'support', 'technique', 'artist']
-    search_fields = ['title', 'artist__first_name', 'artist__last_name', 'artist__pseudonym']
+    list_display = ["title", "artist", "art_type", "support", "technique"]
+    list_filter = ["art_type", "support", "technique", "artist"]
+    search_fields = ["title", "artist__first_name", "artist__last_name", "artist__pseudonym"]
 
 @admin.register(ContextualReference)
 class ContextualReferenceAdmin(admin.ModelAdmin):

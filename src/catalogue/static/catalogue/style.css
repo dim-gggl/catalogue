@@ -24,6 +24,7 @@ html {
     font-family: var(--reg-font);
     background: #00000050;
     max-width: 100vw;
+    min-height: 100vh;
 }
 
 body {
@@ -31,7 +32,12 @@ body {
     margin: 0px;
     background-color: var(--bg-color);
     color: var(--fg-color);
-    max-width: 100vw;
+    /* max-width: 100vw; */
+    min-height: 100%;
+}
+
+main {
+    min-height: 100%;
 }
 
 .logo {
@@ -85,6 +91,8 @@ a {
     margin: 0 1rem;
     color: var(--fg-color);
     text-decoration: none;
+    font-family: var(--urbanist-font);
+    font-size: var(--rem);
 }
 
 button {
@@ -135,17 +143,27 @@ main {
 .login-page {
 	display: flex;
 	justify-content: space-around;
-    height: 60vh;
+    /* height: 60vh; */
+    flex-direction: column;
 }
 
+.login-page > .form-container {
+    /* max-height: 20vh; */
+    flex-direction: column;
+  }
+
 .signup-invitation-container, .form-container {
-    margin: 6vh auto;
+    /* margin: 6vh auto; */
+    min-height: 0vh;
 }
 
 #signup-invitation-title, .form-title {
 	font-weight: 31;
 	font-size: 32px;
 	text-transform: uppercase;
+    text-align: center;
+    font-family: var(--petrona-font);
+    min-width: 35vw;
 }
 
 .form-title form p > label {
@@ -177,6 +195,13 @@ a.login-submit-btn {
 
 }
 
+form > p {
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 0;
+    padding: 2vh 1vw;
+}
+
 form p > input {
     background-color: var(--bg-color);
     font-family: var(--reg-font);
@@ -184,16 +209,21 @@ form p > input {
     padding-inline: 1vw;
     border-radius: 4px;
 }
+
 .form-title form p > label {
     font-weight: 600;
     font-size: 16px;
     font-family: var(--urbanist-font);
 }
+
+.form-container form > ul {
+	display: none;
+}
+
 .login-page > .form-container {
     margin: 6vh auto;
-    /* margin: 6vh auto; */
-    max-height: 20vh;
-    min-width: 30vw;
+    padding: 10vh 6vw;
+    border-radius: 20px;
     display: flex;
     /* flex-direction: column; */
 }
@@ -405,3 +435,12 @@ form p > input {
         font-size: 0.8rem;
     }
 }
+
+/*  MODIFS  */
+  
+
+  
+  /* Inline | http://127.0.0.1:8000/signup/ */
+  
+
+  

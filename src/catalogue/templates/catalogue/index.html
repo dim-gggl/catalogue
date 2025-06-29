@@ -5,8 +5,27 @@
     {% block sign_up_invitation %}{% endblock%}
   </div>
   <fieldset class="form-container">
-    <legend class="form-title">{% block form_title %}{% endblock %}
+    <legend class="form-title">{% block form_title %}{% endblock %}</legend>
       {% block form %}{% endblock %}
+      {% block back_button %}{% endblock %}
   </fieldset>
 </section>
+{% endblock %}
+{% block script %}
+  <script>
+    document.querySelectorAll("form p > input").forEach(input => {
+      const nextHelpText = input.nextElementSibling;
+      input.addEventListener("mouseover", () => {
+        nextHelpText.style.display = "block";
+        nextHelpText.style.zIndex = "1000";
+        nextHelpText.style.opacity = 0.8;
+        nextHelpText.style.textAlign = "center";
+        nextHelpText.style.fontSize = "0.8rem";
+        nextHelpText.style.fontWeight = "bold";
+      });
+      input.addEventListener("mouseout", () => {
+        nextHelpText.style.display = "none";
+      });
+    });
+  </script>
 {% endblock %}

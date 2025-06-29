@@ -9,6 +9,8 @@
     {% include "catalogue/partials/forms.html" %}
   {% endwith %}
   {# Link to return to the login page #}
+{% endblock %}
+{% block back_button %}
   <a href="{% url 'login' %}" class="login-submit-btn" alt="retour à la page d'accueil" tabindex=0 role="button">
     Retour
   </a>

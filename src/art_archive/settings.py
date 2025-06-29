@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "catalogue.apps.CatalogueConfig"
-    ]
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -37,7 +37,9 @@ ROOT_URLCONF = 'art_archive.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR.joinpath("catalogue/templates"),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -2,6 +2,8 @@ from django.views.generic import DetailView, CreateView, ListView
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 from ..models.artwork import Artwork, Artist
 from ..models.wishlist import Wishlist
@@ -11,6 +13,7 @@ from ..forms import ArtworkForm
 class ArtworkDetailView(DetailView):
 
     model = Artwork
+    form_class = ArtworkForm
     template_name = "catalogue/artwork_display.html"
 
     def get_queryset(self):
@@ -40,14 +43,14 @@ class ArtworkCreateView(CreateView):
     model = Artwork
     form_class = ArtworkForm
     template_name = "catalogue/artwork_form.html"
-    redirect_template = "catalogue/artwork_display.html"
+    success_url = reverse_lazy('artwork_display')
 
     def get_success_url(self):
         return reverse("artwork_display", kwargs={"pk": self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["artist"] = Artist.objects.all()
+        context["artists"] = Artist.objects.all()
         return context
     
     def get_template_names(self):
@@ -66,11 +69,12 @@ class ArtworkCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form):
-        valid_artists = form.cleaned_data.get("artists_pseudonyms")
+        valid_artists = form.cleaned_data.get("artists")
         for artist in valid_artists:
             artist.save()
-        form.save()
-        return super().form_valid(form)
+        form.instance.owner = self.request.user
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)

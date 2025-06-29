@@ -7,7 +7,7 @@ from django.conf import settings
 from django.views import View
 from .. import models
 
-from ..forms import UserCreationForm as SignUpForm
+from ..forms import CatalogueUserCreationForm as SignUpForm
 
 
 class ArtLoginView(LoginView):

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 from .art import Art
 from .support import Support
@@ -12,6 +13,7 @@ from .location import Location
 from .contextual_reference import ContextualReference
 
 from ..art_constants import (ART_TYPES, TECHNIQUES, SUPPORTS)
+
 
 class Artwork(models.Model):
     title = models.CharField(max_length=200, blank=True)
@@ -77,6 +79,10 @@ class Artwork(models.Model):
         ContextualReference, blank=True, related_name="artworks"
     )
     images = models.ImageField(upload_to="media/artworks/", blank=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name="artworks"
+    )
 
     def is_in_wishlist(self, user):
         return self in user.wishlist

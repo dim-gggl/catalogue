@@ -6,17 +6,16 @@ from ..managers import UserManager
 from .wishlist import Wishlist
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(blank=True, null=True, unique=True)
     bio = models.TextField(blank=True, max_length=800)
     profile_picture = models.ImageField(
-        upload_to=_('profile_pictures/'),
+        upload_to=_("profile_pictures/"),
         null=True,
-        blank=True
+        blank=True,
     )
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
+    USERNAME_FIELD = "username"
     objects = UserManager()
 
     def __repr__(self):

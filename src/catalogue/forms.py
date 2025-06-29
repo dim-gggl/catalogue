@@ -23,7 +23,19 @@ class CatalogueUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["username", "email", "password1", "password2"]
+        labels = {
+            "username": _("Nom d'utilisateur *"),
+            "email": _("Email"),
+            "password1": _("Mot de passe *"),
+            "password2": _("Confirmation du mot de passe *"),
+        }
+        help_texts = {
+            "username": _("Ce nom d'utilisateur sera utilisé pour vous identifier sur le site."),
+            "email": _("Une adresse mail valide (optionnel)"),
+            "password1": _("Le mot de passe doit contenir au moins 8 caractères."),
+            "password2": _("Les mots de passe doivent correspondre."),
+        }
 
 
 class CatalogueUserChangeForm(UserChangeForm):
@@ -31,6 +43,12 @@ class CatalogueUserChangeForm(UserChangeForm):
     class Meta:
         model = User
         fields = ["username", "email", "bio", "profile_picture"]
+        labels = {
+            "username": _("Nom d'utilisateur *"),
+            "email": _("Email"),
+            "bio": _("Bio"),
+            "profile_picture": _("Photo de profil"),
+        }
 
 
 class ArtForm(forms.ModelForm):
@@ -119,7 +137,7 @@ class ArtworkForm(forms.ModelForm):
             "tags": _("Étiquettes"),
             "exhibitions": _("Expositions"),
             "location": _("Lieu"),
-            "is_signated": _("est signé"),
+            "is_signated": _("Est signée"),
             "contextual_references": _("Références contextuelles"),
         }
 
@@ -132,7 +150,9 @@ class ArtworkForm(forms.ModelForm):
         
         if not art_type and new_art_type:
             # Créer un nouveau type d'art
-            art_type, created = Art.objects.get_or_create(name=new_art_type.strip())
+            art_type, created = Art.objects.get_or_create(
+                name=new_art_type.strip()
+            )
             cleaned_data['art_type'] = art_type
         elif not art_type and not new_art_type:
             raise forms.ValidationError(
@@ -199,6 +219,25 @@ class ArtworkForm(forms.ModelForm):
             self.save_m2m()
         
         return instance
+
+
+class ArtistForm(forms.ModelForm):
+    class Meta:
+        model = Artist
+        fields = "__all__"
+        labels = {
+            "pseudonym": _("Pseudonyme"),
+            "first_name": _("Prénom"),
+            "last_name": _("Nom"),
+            "birth_date": _("Date de naissance"),
+            "death_date": _("Date de décès"),
+            "nationality": _("Nationalité"),
+            "biography": _("Biographie"),
+        }
+        widgets = {
+            "birth_date": forms.DateInput(attrs={"type": "date"}),
+            "death_date": forms.DateInput(attrs={"type": "date"}),
+        }
 
 
 class CollectionForm(forms.ModelForm):

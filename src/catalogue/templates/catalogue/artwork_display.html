@@ -1,5 +1,10 @@
+{% extends "catalogue/base.html" %}
 {% load i18n %}
+{% block content %}
 <section class="artwork-display-container">
+  {% if artwork.image %}
+    <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}" class="artwork-image">
+  {% endif %}
   <ul class="artwork-params-ul">
     <h1 class="artwork-params-ul-title">
       {{ artwork.title|default:"Œuvre sans titre" }}
@@ -68,3 +73,4 @@
     <p><a href="{% url 'login' %}">Connectez-vous</a> pour commenter cette œuvre.</p>
   {% endif %}
 </section> -->
+{% endblock %}
